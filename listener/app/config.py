@@ -19,4 +19,7 @@ class Settings(BaseSettings):
     rpc_port: int = os.getenv("RPC_PORT")
     rpc_url: str = f"http://{rpc_user}:{rpc_password}@{rpc_host}:{rpc_port}"
 
+    # Block listener settings
+    listen_interval: int = os.getenv("LISTEN_INTERVAL")
+
 settings = Settings()

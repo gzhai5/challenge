@@ -27,8 +27,7 @@ services:
     ports:
       - 8018:8000
     depends_on:
-      db:
-        condition: service_started
+      - db
     environment:
       - MYSQL_HOST=db
       - MYSQL_PORT=3306
@@ -43,8 +42,7 @@ services:
     volumes:
       - ../listener:/app
     depends_on:
-      db:
-        condition: service_started
+      - db
     environment:
       - MYSQL_HOST=db
       - MYSQL_PORT=3306
@@ -55,6 +53,7 @@ services:
       - RPC_PASSWORD=123456
       - RPC_HOST=host.docker.internal
       - RPC_PORT=38332
+      - LISTEN_INTERVAL=10
 
   dozzle:
     container_name: challenge-monitor-dozzle
