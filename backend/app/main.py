@@ -32,7 +32,7 @@ def get_db():
 def get_op_return_data(opReturnData: str, db: Session = Depends(get_db)):
     try:
         response = bitcoin_service.get_op_return_data(opReturnData, db)
-        logger.info(f"get_op_return_data successfully with response: {response}")
+        logger.info(f"get_op_return_data successfully")
         return response
     except HTTPException as http_exception:
         logger.error(f"get_op_return_data failed with HTTPException: {http_exception}")
