@@ -99,5 +99,5 @@ Backend API testing can be accessed via http://localhost:8018/docs when service 
 A successful API test call will look like this:
 
 <figure style="text-align:center">
-  <img src="/static/sucess.png" alt="ERROR">
+  <img src="static/success.png" alt="ERROR">
 </figure>
