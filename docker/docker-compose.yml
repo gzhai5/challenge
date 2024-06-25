@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0.31
+    container_name: challenge-mysql-db
+    restart: always
+    volumes:
+      - challenge_mysql_db_data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 8090:3306
+    expose:
+      - 3306
+    command: --default-authentication-plugin=mysql_native_password --max_allowed_packet=256000000
+
+  backend:
+    build: ../backend
+    container_name: challenge-backend
+    restart: always
+    volumes:
+      - ../backend:/app
+    ports:
+      - 8018:8000
+    depends_on:
+      - db
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+
+  listerner:
+    build: ../listener
+    container_name: challenge-listener
+    restart: always
+    volumes:
+      - ../listener:/app
+    depends_on:
+      - db
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - RPC_USER=mud
+      - RPC_PASSWORD=123456
+      - RPC_HOST=host.docker.internal
+      - RPC_PORT=38332
+      - LISTEN_INTERVAL=10
+
+  dozzle:
+    container_name: challenge-monitor-dozzle
+    restart: always
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9999:8080
+
+volumes:
+  challenge_mysql_db_data:
+
+networks:
+  default:
+    driver: bridge
