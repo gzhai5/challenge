@@ -33,10 +33,14 @@ class BitcoinCoreService:
         latest_block_hash = self.rpc_connection.getbestblockhash()
         logger.info(f"Starting the listener from block: {latest_block_hash}")
 
+        # decide whether to process the first block or not
         if first_block_handle:
             logger.info("first block handle is enabled, processing the first block...")
             self.process_block(self.rpc_connection, latest_block_hash)
+        else:
+            logger.info("Skipping the first block and waiting for the new blocks...")
 
+        # start listening for new blocks and keep processing them
         while True:
             logger.info(f"Listening for new blocks with {settings.listen_interval} seconds interval...")
             new_block_hash = self.rpc_connection.getbestblockhash()
@@ -62,6 +66,7 @@ class BitcoinCoreService:
                     timestamp=datetime.fromtimestamp(block['time']).strftime('%Y-%m-%d %H:%M:%S')
                 ))
                 logger.debug(f"Block model gets created: {block_model.__dict__}")
+                logger.info(f'This block has {len(block["tx"])} transactions')
 
                 for txid in block['tx']:
                     transaction_model = create_transaction(session, Transaction(
@@ -102,8 +107,8 @@ class BitcoinCoreService:
         op_return_data = []
         for vout in raw_tx['vout']:
             if vout['scriptPubKey']['type'] == 'nulldata':
-                op_return_hex = vout['scriptPubKey']['asm'].split(' ')[1]
-                op_return_data.append(op_return_hex)
+                op_return_hexs = vout['scriptPubKey']['asm'].split(' ')[1:]
+                op_return_data.extend(op_return_hexs)
         return op_return_data
     
 bitcoin_core_service = BitcoinCoreService()

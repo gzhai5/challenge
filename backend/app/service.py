@@ -29,13 +29,14 @@ class BitcoinService():
                         })
 
         return {
-            "op_return_data": op_return_data,
+            "op_return_data_text": op_return_data,
+            "op_return_data_hex": op_return_data_hex,
             "transactions": transactions
         }
     
     @staticmethod
     def str_to_hex(s: str) -> str:
-        return s.encode('utf-8').hex()
+        return s.encode('latin1').hex()
 
 
 bitcoin_service = BitcoinService()
