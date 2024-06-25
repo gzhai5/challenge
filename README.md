@@ -45,6 +45,12 @@ Go to the docker folder, run the cmd (if having same docker version):
 docker-compose up --build
 ```
 
+Or there's a shell script to do the same things
+```bash
+cd script/
+./startall.sh
+```
+
 A container logs viewer will be available at localhost:9999
 
 Database could be connected via jdbc:mysql://localhost:8090/db on DBeaver using username=user, password=password.
