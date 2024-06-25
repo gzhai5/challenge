@@ -96,7 +96,7 @@ CREATE TABLE transaction_op_return (
 ## Backend API testing
 Backend API testing can be accessed via http://localhost:8018/docs when service is up.
 
-A successful API test call will look like this:
+A successful API test call will look like this below, which we can find more infomarion at [mempool](https://mempool.space/signet/tx/ef192a75bf90e430826f32c7aaa0a9d2aa99f8ddc02e5fef33a98bf7fe4cc1f9) and [bitcoin explorer](https://signet.bitcoinexplorer.org/tx/ef192a75bf90e430826f32c7aaa0a9d2aa99f8ddc02e5fef33a98bf7fe4cc1f9#JSON).
 
 <figure style="text-align:center">
   <img src="static/success.png" alt="ERROR">
