@@ -95,3 +95,9 @@ CREATE TABLE transaction_op_return (
 
 ## Backend API testing
 Backend API testing can be accessed via http://localhost:8018/docs when service is up.
+
+A successful API test call will look like this:
+
+<figure style="text-align:center">
+  <img src="/static/sucess.png" alt="ERROR">
+</figure>
